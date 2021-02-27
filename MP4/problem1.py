@@ -69,6 +69,18 @@ def calculate_workspace_axis(robot,obstacles,end_effector,point_local,axis_local
     
     reachable = np.zeros(resolution)
     #TODO: your code here
+    for i in range(resolution[0]):
+        for j in range(resolution[1]):
+            for k in range(resolution[2]):
+                orig_config = robot.getConfig()
+                point = vectorops.add(vectorops.mul([i,j,k], cellsize), lower_corner)
+                world_constraint = ik.fixed_rotation_objective(end_effector, world_axis=axis_world)
+                local_constraint = ik.fixed_rotation_objective(end_effector, local_axis=axis_local)
+                point_goal = ik.objective(end_effector, local=point_local, world=point)
+                if ik.solve_global([point_goal, local_constraint, world_constraint], iters=10):
+                    reachable[i,j,k] = 1.0
+                robot.setConfig(orig_config)
+
     return reachable
 
 w = WorldModel()
@@ -139,9 +151,29 @@ def problem_1c():
     np.save('problem1c_forward.npy',Wside)
     
     #TODO: replace this with your own visualization.
-    show_workspace(Wup)
-    show_workspace(Wdown)
-    show_workspace(Wside)
+    Wup_down = Wup - Wdown
+    show_workspace(np.array([[0.0 if elem <= 0 else 1.0 for elem in row] for row in Wup_down]))
+    Wdown_up = Wdown - Wup
+    show_workspace(np.array([[0.0 if elem <= 0 else 1.0 for elem in row] for row in Wdown_up]))
+
+    Wup_side = Wup - Wside
+    show_workspace(np.array([[0.0 if elem <= 0 else 1.0 for elem in row] for row in Wup_side]))
+    Wside_up = Wside - Wup
+    show_workspace(np.array([[0.0 if elem <= 0 else 1.0 for elem in row] for row in Wside_up]))
+
+    Wdown_side = Wdown - Wside
+    show_workspace(np.array([[0.0 if elem <= 0 else 1.0 for elem in row] for row in Wdown_side]))
+    Wside_down = Wside - Wdown
+    show_workspace(np.array([[0.0 if elem <= 0 else 1.0 for elem in row] for row in Wside_down]))
+
+    # show_workspace(Wdown - Wup)
+    # show_workspace(Wup - Wside)
+    # show_workspace(Wside - Wup)
+    # show_workspace(Wdown - Wside)
+    # show_workspace(Wside - Wdown)
+    # show_workspace(Wup)
+    # show_workspace(Wdown)
+    # show_workspace(Wside)
 
 def show_problem_1c():
     Wup = np.load('problem1b.npy')
@@ -149,15 +181,27 @@ def show_problem_1c():
     Wside = np.load('problem1c_forward.npy')
 
     #TODO: replace this with your own visualization
-    show_workspace(Wup)
-    show_workspace(Wdown)
-    show_workspace(Wside)
+    Wup_down = Wup - Wdown
+    print(Wup_down.shape)
+    show_workspace(np.array([[[0.0 if elem <= 0 else 1.0 for elem in row] for row in mat] for mat in Wup_down]))
+    Wdown_up = Wdown - Wup
+    show_workspace(np.array([[[0.0 if elem <= 0 else 1.0 for elem in row] for row in mat] for mat in Wdown_up]))
+
+    Wup_side = Wup - Wside
+    show_workspace(np.array([[[0.0 if elem <= 0 else 1.0 for elem in row] for row in mat] for mat in Wup_side]))
+    Wside_up = Wside - Wup
+    show_workspace(np.array([[[0.0 if elem <= 0 else 1.0 for elem in row] for row in mat] for mat in Wside_up]))
+
+    Wdown_side = Wdown - Wside
+    show_workspace(np.array([[[0.0 if elem <= 0 else 1.0 for elem in row] for row in mat] for mat in Wdown_side]))
+    Wside_down = Wside - Wdown
+    show_workspace(np.array([[[0.0 if elem <= 0 else 1.0 for elem in row] for row in mat] for mat in Wside_down]))
 
 
 if __name__=='__main__':
-    problem_1a()
+    # problem_1a()
     #show_problem_1a()
-    #problem_1b()
+    # problem_1b()
     #show_problem_1b()
-    #problem_1c()
-    #show_problem_1c()
+    # problem_1c()
+    show_problem_1c()
