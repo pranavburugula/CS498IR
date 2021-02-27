@@ -45,7 +45,7 @@ def calculate_workspace_free(robot,obstacles,end_effector,point_local):
         if all(i>=0 and i<r for (i,r) in zip(index,resolution)):
             reachable[tuple(index)] = 1.0
         # print(index)
-        num_samples = 10000
+        num_samples = 100000
         rand_positions = np.random.rand(num_samples, 3)
         rand_positions[:,0] = rand_positions[:,0] * vectorops.sub(upper_corner, lower_corner)[0] + lower_corner[0]
         rand_positions[:,1] = rand_positions[:,1] * vectorops.sub(upper_corner, lower_corner)[1] + lower_corner[1]
