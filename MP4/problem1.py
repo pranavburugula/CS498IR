@@ -16,8 +16,14 @@ upper_corner = (1.1,1.1,1.5)
 
 def collision_free(robot,obstacles):
     #TODO: do environment collision checking
+    # print(RobotModel.getConfig())
+    # print(robot.getConfig)
     if robot.selfCollides():
         return False
+    for obstacle in obstacles:
+        for i in range(robot.numLinks()):
+            if obstacle.geometry().collides(robot.link(i).geometry()):
+                return False
     return True
 
 def calculate_workspace_free(robot,obstacles,end_effector,point_local):
@@ -38,6 +44,20 @@ def calculate_workspace_free(robot,obstacles,end_effector,point_local):
         index = [int(math.floor(v)) for v in vectorops.mul(vectorops.sub(wp,lower_corner),invcellsize)]
         if all(i>=0 and i<r for (i,r) in zip(index,resolution)):
             reachable[tuple(index)] = 1.0
+        # print(index)
+        rand_positions = np.random.rand(10000, 3)
+        rand_positions[:,0] = rand_positions[:,0] * vectorops.sub(upper_corner, lower_corner)[0] + lower_corner[0]
+        rand_positions[:,1] = rand_positions[:,1] * vectorops.sub(upper_corner, lower_corner)[1] + lower_corner[1]
+        rand_positions[:,2] = rand_positions[:,2] * upper_corner[2]
+
+        for i in range(10000):
+            index = [int(math.floor(v)) for v in vectorops.mul(vectorops.sub(rand_positions[i],lower_corner),invcellsize)]
+            for obstacle in obstacles:
+                if obstacle.geometry().distance_point(rand_positions[i]).d <= 0:
+                    reachable[tuple(index)] = 0.0
+                else:
+                    reachable[tuple(index)] = 1.0
+
     return reachable
 
 def calculate_workspace_axis(robot,obstacles,end_effector,point_local,axis_local,axis_world):
