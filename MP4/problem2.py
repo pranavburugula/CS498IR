@@ -1,5 +1,5 @@
 from klampt import WorldModel,RobotModel,RobotModelLink,Geometry3D,Simulator
-from klampt.math import vectorops,so3,se3
+from klampt.math import vectorops,so3,se3,so2
 from klampt.model import ik
 from klampt.model.trajectory import Trajectory
 from klampt.io import resource
@@ -54,6 +54,8 @@ class CircleController:
         self.radius = radius
         self.period = period
         self.time = 0
+        # print(end_effector)
+        self.cur_position = self.end_effector.getWorldPosition(pen_local_tip)
 
     def advance(self,dt):
         """Move the end effector in a circle, maintaining its orientation
@@ -67,13 +69,46 @@ class CircleController:
         # TODO: implement me
         if not controller.isMoving():
             #done with prior motion
-            model.randomizeConfig()
-            q = model.getConfig()
-            duration = 2
-            controller.setPiecewiseLinear([duration],[controller.configFromKlampt(q)])
+            # model.randomizeConfig()
+            # q = model.getConfig()
+            # duration = 2
+            # controller.setPiecewiseLinear([duration],[controller.configFromKlampt(q)])
             #setPosition does an immediate position command
-            #self.robot_controller.setPosition(self.robot_controller.configFromKlampt(q))
+            # self.robot_controller.setPosition(self.robot_controller.configFromKlampt(q))
+            pen_axis_ik = ik.fixed_rotation_objective(self.end_effector, local_axis=self.pen_local_axis)
+            z_axis_ik = ik.fixed_rotation_objective(self.end_effector, world_axis=[0,0,1])
+            next_pos = self.cur_pos(self.time + dt)
+            point_ik = ik.objective(self.end_effector, local=self.end_effector.getLocalPosition(self.cur_position), world=next_pos)
+            ik.solve([pen_axis_ik, z_axis_ik, point_ik])
+            q = model.getConfig()
+            controller.setPiecewiseLinear([dt], [controller.configFromKlampt(q)])
+            self.time += dt
+            self.cur_position = next_pos
+            
+            self.normalize_config(controller.configToKlampt(controller.commandedPosition()), qcur)
+            qcur = controller.configToKlampt(controller.commandedPosition())
+            
         return
+    
+    def cur_pos(self, time):
+        theta = (2 * math.pi / self.period) * time
+        x = math.cos(theta)
+        y = math.sin(theta)
+        return [x,y,0]
+
+
+    def normalize_config(self,config,reference):
+        """For a configuration that may have wildly incorrect continuous-rotation
+        joints, this calculates a version of config that represents the same
+        configuration but is within +/ pi radians of the reference configuration.
+        """
+        res = [v for v in config]
+        spin_joints = [1,3,5,7]
+        for i in spin_joints:
+            if abs(config[i]-reference[i]) > math.pi:
+                d = so2.diff(config[i]%(math.pi*2),reference[i])
+                res[i] = reference[i] + d
+        return res
 
 
 
@@ -91,7 +126,7 @@ def run_simulation(world):
 
     robot_controller = RobotInterfaceCompleter(KinematicSimControlInterface(sim_robot))
     #TODO: Uncomment this when you are ready for testing in the physics simulation
-    #robot_controller = RobotInterfaceCompleter(SimPositionControlInterface(sim.controller(0),sim))
+    # robot_controller = RobotInterfaceCompleter(SimPositionControlInterface(sim.controller(0),sim))
     if not robot_controller.initialize():
         raise RuntimeError("Can't connect to robot controller")
 
