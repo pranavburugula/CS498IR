@@ -15,12 +15,16 @@ def feasible_plan(world,robot,qtarget):
     t0 = time.time()
 
     moving_joints = [1,2,3,4,5,6,7]
-    space = robotplanning.makeSpace(world=world,robot=robot,edgeCheckResolution=1e-2,movingSubset=moving_joints)
-    plan = MotionPlan(space,type='prm')
+    # space = robotplanning.makeSpace(world=world,robot=robot,edgeCheckResolution=1e-2,movingSubset=moving_joints)
+    plan = robotplanning.planToConfig(world, robot, qtarget, movingSubset=moving_joints)
     #TODO: maybe you should use planToConfig?
-
-    numIters = 0
+    numIters = 100
+    path = plan.getPath()
     t1 = time.time()
+    while path == None and t1 - t0 <= 10:
+        plan.planMore(numIters)
+        t1 = time.time()
+        path = plan.getPath()
     print("Planning time,",numIters,"iterations",t1-t0)
     
     #to be nice to the C++ module, do this to free up memory
