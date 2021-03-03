@@ -40,6 +40,24 @@ def optimizing_plan(world,robot,qtarget):
     Returns None if no path was found, otherwise returns the best plan found.
     """
     #TODO: copy what's in feasible_plan, but change the way in which you to terminate
+    t0 = time.time()
+
+    moving_joints = [1,2,3,4,5,6,7]
+    # space = robotplanning.makeSpace(world=world,robot=robot,edgeCheckResolution=1e-2,movingSubset=moving_joints)
+    plan = robotplanning.planToConfig(world, robot, qtarget, movingSubset=moving_joints, type='lazyrrg*')
+    #TODO: maybe you should use planToConfig?
+    numIters = 100
+    t1 = time.time()
+    while t1 - t0 <= 10:
+        plan.planMore(numIters)
+        t1 = time.time()
+    path = plan.getPath()
+    print("Planning time,",numIters,"iterations",t1-t0)
+    debug_plan_results(plan, robot)
+    #to be nice to the C++ module, do this to free up memory
+    plan.space.close()
+    plan.close()
+    return path
 
 def debug_plan_results(plan,robot):
     """Potentially useful for debugging planning results..."""

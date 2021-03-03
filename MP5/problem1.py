@@ -5,8 +5,8 @@ from klampt.model import trajectory
 import planning
 import math
 
-PROBLEM = '1a'
-#PROBLEM = '1b'
+# PROBLEM = '1a'
+PROBLEM = '1b'
 
 if __name__ == '__main__':
     #load the robot / world file
@@ -31,8 +31,8 @@ if __name__ == '__main__':
     #add the world elements individually to the visualization
     vis.add("world",world)
     vis.add("start",qstart,color=(0,1,0,0.5))
-    qgoal = resource.get("goal.config",world=world)
-    #qgoal = resource.get("goal_easy.config",world=world)
+    # qgoal = resource.get("goal.config",world=world)
+    qgoal = resource.get("goal_easy.config",world=world)
     robot.setConfig(qgoal)
     vis.edit(vis.getItemName(robot))
     def planTriggered():
