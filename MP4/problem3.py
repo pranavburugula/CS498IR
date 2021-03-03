@@ -37,7 +37,12 @@ def get_paths(add_to_vis=True):
     #return get_paths_svg("mypaths.svg",add_to_vis)
 
     trajs = []
-    trajs.append(Trajectory([0,1],[[0,0,0],[0.2,0,0]]))
+    trajs.append(Trajectory([0,1,2,2.5,3,4,4.5,5],[[0,0,0],[0,0.2,0],[0.07,0.2,0],[0.1,0.15,0],[0.07,0.1,0],[0,0.1,0],[0,0.1,0.1],[0,0.1,0.1]]))
+    trajs.append(Trajectory([0,1,2,2.5,3,3.5,4], [[0,0.1,0.1],[0.3,0,0],[0.3,0.1,0],[0.35,0.1,0],[0.35,0.08,0],[0.35,0.08,0.1],[0.35,0.08,0.1]]))
+    trajs.append(Trajectory([0,1,1.5,2,2.5,3,3.5,4], [[0.35,0.08,0.1],[0.45,0.03,0],[0.4,0,0],[0.4,0.1,0],[0.45,0.1,0],[0.45,0,0],[0.45,0,0.1],[0.45,0,0.1]]))
+    trajs.append(Trajectory([0,1,1.5,2,2.5,3,3.5], [[0.45,0,0.1],[0.5,0,0],[0.5,0.1,0],[0.55,0.1,0],[0.55,0,0],[0.55,0,0.1],[0.55,0,0.1]]))
+    trajs.append(Trajectory([0,1,1.5,2,2.5,3,3.5,4], [[0.55,0,0.1],[0.65,0.03,0],[0.6,0,0],[0.6,0.1,0],[0.65,0.1,0],[0.65,0,0],[0.65,0,0.1],[0.65,0,0.1]]))
+    trajs.append(Trajectory([0,1,1.5,2,2.5,3,3.5], [[0.65,0,0.1],[0.7,0.1,0],[0.75,0,0],[0.8,0.1,0],[0.8,0.1,0.1],[0.8,0.1,0.1]]))
     if add_to_vis:
         for i,traj in enumerate(trajs):
             vis.add("path %d"%i,traj)
@@ -97,10 +102,11 @@ class DrawingController:
         self.lift_amount = lift_amount
         self.robot_controller = robot_controller
         #store some internal state here
-        self.state = 'moveto'
+        self.state = 'moveinit'
         self.path_index = 0
         self.path_progress = 0
         self.wait = 0
+        self.cur_position = self.end_effector.getWorldPosition(self.pen_local_tip)
 
 
     def advance(self,dt):
@@ -127,11 +133,35 @@ class DrawingController:
                 return
             self.wait = 0
             #done with prior motion
-            model.randomizeConfig()
+            # model.randomizeConfig()
             model.setConfig(normalize_config(model.getConfig(),qcur))  #this is needed to handle the funky spin joints
-            q = model.getConfig()
-            duration = 2
-            controller.setPiecewiseLinear([duration],[controller.configFromKlampt(q)])
+            pen_axis_ik = ik.fixed_rotation_objective(self.end_effector, local_axis=self.pen_local_axis)
+            if self.state == "moveinit":
+                if self.path_index >= len(self.paths):
+                    return
+                point_ik = ik.objective(self.end_effector, local=self.end_effector.getLocalPosition(self.cur_position), world=self.paths[self.path_index].milestones[0])
+                ik.solve([pen_axis_ik, point_ik])
+                q = model.getConfig()
+                controller.setPiecewiseLinear([dt],[controller.configFromKlampt(q)])
+                self.state = "writepath"
+                self.path_progress += 1
+                self.cur_position = self.paths[self.path_index].milestones[0]
+            elif self.state == "writepath":
+                if self.path_progress < len(self.paths[self.path_index]):
+                    point_ik = ik.objective(self.end_effector, local=self.end_effector.getLocalPosition(self.cur_position), world=self.paths[self.path_index].milestones[self.path_progress])
+                    ik.solve([pen_axis_ik, point_ik])
+                    q = model.getConfig()
+                    controller.setPiecewiseLinear([dt],[controller.configFromKlampt(q)])
+                    self.path_progress += 1
+                    self.cur_position = self.paths[self.path_index].milestones[0]
+                else:
+                    self.state = "endpath"
+            elif self.state == "endpath":
+                self.path_progress = 0
+                self.state == "moveinit"
+                self.path_index += 1
+            # duration = 2
+            # controller.setPiecewiseLinear([duration],[controller.configFromKlampt(q)])
             #setPosition does an immediate position command
             #self.robot_controller.setPosition(self.robot_controller.configFromKlampt(q))
         return

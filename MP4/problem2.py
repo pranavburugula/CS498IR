@@ -85,8 +85,8 @@ class CircleController:
             self.time += dt
             self.cur_position = next_pos
             
-            self.normalize_config(controller.configToKlampt(controller.commandedPosition()), qcur)
-            qcur = controller.configToKlampt(controller.commandedPosition())
+            q = self.normalize_config(q, qcur)
+            model.setConfig(q)
             
         return
     
@@ -124,9 +124,9 @@ def run_simulation(world):
     planning_robot = planning_world.robot(0)
     sim = Simulator(sim_world)
 
-    robot_controller = RobotInterfaceCompleter(KinematicSimControlInterface(sim_robot))
+    # robot_controller = RobotInterfaceCompleter(KinematicSimControlInterface(sim_robot))
     #TODO: Uncomment this when you are ready for testing in the physics simulation
-    # robot_controller = RobotInterfaceCompleter(SimPositionControlInterface(sim.controller(0),sim))
+    robot_controller = RobotInterfaceCompleter(SimPositionControlInterface(sim.controller(0),sim))
     if not robot_controller.initialize():
         raise RuntimeError("Can't connect to robot controller")
 
