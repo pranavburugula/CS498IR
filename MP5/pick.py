@@ -1,6 +1,7 @@
 from planning import *
 from klampt.model import collide
 from klampt.model import ik
+from klampt.model import config
 from klampt.model.trajectory import Trajectory,RobotTrajectory
 from klampt.math import vectorops,so3,se3
 
@@ -16,6 +17,8 @@ def is_collision_free_grasp(world,robot,object):
                 return False
     for i in range(world.numRigidObjects()):
         for j in range(robot.numLinks()):
+            if i == object.getID() and robot.link(j).name() in finger_pad_links:
+                continue
             if robot.link(j).geometry().collides(world.rigidObject(i).geometry()):
                 return False
     return True
@@ -62,12 +65,15 @@ def plan_pick_one(world,robot,object,gripper,grasp):
     grasp.ik_constraint.robot = robot  #this makes it more convenient to use the ik module
     
     #TODO solve the IK problem for qgrasp?
-    qgrasp = qstart
+    def collision_free():
+        return is_collision_free_grasp(world, robot, object)
+
+    ik.solve_global([grasp.ik_constraint], iters=100, numRestarts=10, feasibilityCheck=collision_free)
+    qgrasp = robot.getConfig()
 
     qgrasp = grasp.set_finger_config(qgrasp)  #open the fingers the right amount
     qopen = gripper.set_finger_config(qgrasp,gripper.partway_open_config(1))   #open the fingers further
-
-    qpregrasp = qopen   #TODO solve the retraction problem for qpregrasp?
+    qpregrasp = retract(robot, gripper, [0,0,-0.2])   #TODO solve the retraction problem for qpregrasp?
 
     qstartopen = gripper.set_finger_config(qstart,gripper.partway_open_config(1))  #open the fingers of the start to match qpregrasp
     robot.setConfig(qstartopen)
@@ -76,9 +82,9 @@ def plan_pick_one(world,robot,object,gripper,grasp):
         return None
 
     #TODO: not a lot of collision checking going on either...
-
-    qlift = qgrasp
-    return (RobotTrajectory(robot,milestones=[qstart]+transit),RobotTrajectory(robot,milestones=[qpregrasp,qopen,qgrasp],RobotTrajectory(robot,milestones=[qgrasp,qlift])
+    robot.setConfig(qgrasp)
+    qlift = retract(robot, gripper, [0,0,-0.2])
+    return (RobotTrajectory(robot,milestones=[qstart]+transit),RobotTrajectory(robot,milestones=[qpregrasp,qopen,qgrasp]),RobotTrajectory(robot,milestones=[qgrasp,qlift]))
 
 
 def plan_pick_grasps(world,robot,object,gripper,grasps):
