@@ -74,10 +74,13 @@ def plan_pick_one(world,robot,object,gripper,grasp):
     qgrasp = grasp.set_finger_config(qgrasp)  #open the fingers the right amount
     qopen = gripper.set_finger_config(qgrasp,gripper.partway_open_config(1))   #open the fingers further
     qpregrasp = retract(robot, gripper, [0,0,-0.2])   #TODO solve the retraction problem for qpregrasp?
+    if qpregrasp is None:
+        return None
 
     qstartopen = gripper.set_finger_config(qstart,gripper.partway_open_config(1))  #open the fingers of the start to match qpregrasp
     robot.setConfig(qstartopen)
-    transit = feasible_plan(world,robot,qpregrasp)   #decide whether to use feasible_plan or optimizing_plan
+    # print(qpregrasp)
+    transit = optimizing_plan(world,robot,qpregrasp)   #decide whether to use feasible_plan or optimizing_plan
     if not transit:
         return None
 
@@ -109,7 +112,11 @@ def plan_pick_grasps(world,robot,object,gripper,grasps):
         vis.debug(q,world=world) will show a configuration.
     """
     #TODO: implement me
-
+    for grasp in grasps:
+        motion = plan_pick_one(world, robot, object, gripper, grasp)
+        if motion is not None:
+            return motion
+    return None
 
 class StepResult:    
     FAIL = 0
@@ -260,10 +267,16 @@ class PickPlanner(MultiStepPlanner):
 
     def solve_qgrasp(self,grasp):
         #TODO: solve for the grasping configuration 
-        return None
+        grasp.ik_constraint.robot = self.robot
+        def check():
+            return is_collision_free_grasp(self.world, self.robot, self.object)
+        ik.solve_global([grasp.ik_constraint], iters=100, numRestarts=10, feasibilityCheck=check)
+        qgrasp = robot.getConfig()
+        return qgrasp
 
     def solve_approach(self,grasp,qgrasp):
         #TODO: solve for the approach 
+        
         return None
 
     def solve_transit(self,qpregrasp):

@@ -12,8 +12,8 @@ import grasp
 import grasp_database
 from known_grippers import *
 
-PROBLEM = '2a'
-#PROBLEM = '2b'
+# PROBLEM = '2a'
+PROBLEM = '2b'
 #PROBLEM = '2c'
 
 if __name__ == '__main__':
