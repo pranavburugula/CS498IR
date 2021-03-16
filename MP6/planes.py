@@ -13,8 +13,8 @@ from rgbd_realsense import load_rgbd_dataset
 import json
 
 PROBLEM = '1a'
-PROBLEM = '1b'
-PROBLEM = '1c'
+# PROBLEM = '1b'
+# PROBLEM = '1c'
 DONT_EXTRACT = False #if you just want to see the point clouds, turn this to true
 
 def extract_planes_ransac_a(pc,N=100,m=3,inlier_threshold=0.01,inlier_count=20000):
@@ -40,8 +40,21 @@ def extract_planes_ransac_a(pc,N=100,m=3,inlier_threshold=0.01,inlier_count=2000
     #to fit a plane through N>=3 points:
     #(a,b,c,d) = fit_plane([p1,p2,p3,p4])
     planes = []
-    planes.append([0,1,2,3,4])
-    planes.append([5,6,7,8])
+    for i in range(N):
+        indices = np.random.choice(range(pc.shape[0]), size=(m,), replace=False)
+        # print(indices)
+        # print(pc.shape)
+        (a,b,c,d) = fit_plane3(pc[indices[0]], pc[indices[1]], pc[indices[2]])
+        plane_indices = []
+        for i in range(pc.shape[0]):
+            point = pc[i]
+            if np.abs(np.array([a,b,c]).T@point + d) < inlier_threshold:
+                plane_indices.append(i)
+        if len(plane_indices) >= inlier_count:
+            planes.append(plane_indices)
+
+    # planes.append([0,1,2,3,4])
+    # planes.append([5,6,7,8])
     return planes
     
 def extract_planes_ransac_b(pc,N=100,m=3,inlier_threshold=0.01,inlier_count=20000):
