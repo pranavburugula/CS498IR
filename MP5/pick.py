@@ -267,12 +267,8 @@ class PickPlanner(MultiStepPlanner):
 
     def solve_qgrasp(self,grasp):
         #TODO: solve for the grasping configuration 
-        grasp.ik_constraint.robot = self.robot
-        def check():
-            return is_collision_free_grasp(self.world, self.robot, self.object)
-        ik.solve_global([grasp.ik_constraint], iters=100, numRestarts=10, feasibilityCheck=check)
-        qgrasp = robot.getConfig()
-        return qgrasp
+        
+        return None
 
     def solve_approach(self,grasp,qgrasp):
         #TODO: solve for the approach 
