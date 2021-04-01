@@ -48,6 +48,13 @@ def sample_object_pose_table(obj,stable_fs,bmin,bmax):
     normal = normal / np.linalg.norm(normal)
     centroid = np.sum(face,axis=0)/len(face)
     #TODO:...
+    R = so3.vector_rotation(normal, [0, 0, -1])
+    bb = obj.geometry().getBBTight()
+    # print(bb)
+    
+    t = [,,table_height - centroid[2]]
+    # print(R)
+    # print(centroid)
     obj.setTransform(*se3.identity())
 
 def arrange_objects(world,obj_fns,bmin,bmax,interior=False):

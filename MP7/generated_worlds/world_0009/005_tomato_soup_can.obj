@@ -1,0 +1,9 @@
+mesh ../../../data/objects/ycb-select/005_tomato_soup_can/textured.obj
+T 1 0 0 0 1 0 0 0 1 0 0 0
+mass 1
+com -0.0093139 0.0841985 0.051297
+inertia 0.00135698 -3.33971e-07 -2.94117e-06 -3.33971e-07 0.00136417 -2.46572e-07 -2.94117e-06 -2.46572e-07 0.000747774
+kFriction 0.5
+kRestitution 0
+kStiffness inf
+kDamping inf

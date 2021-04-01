@@ -1,0 +1,9 @@
+mesh ../../../data/objects/ycb-select/030_fork/textured.obj
+T 1 0 0 0 1 0 0 0 1 0 0 0
+mass 1
+com -0.00704096 -0.0217331 0.00655251
+inertia 4.45734e-05 -1.31955e-05 -4.22203e-05 -1.31955e-05 0.00321253 2.63663e-06 -4.22203e-05 2.63663e-06 0.00323247
+kFriction 0.5
+kRestitution 0
+kStiffness inf
+kDamping inf

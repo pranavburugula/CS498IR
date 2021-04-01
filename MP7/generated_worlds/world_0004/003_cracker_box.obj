@@ -1,0 +1,9 @@
+mesh ../../../data/objects/ycb-select/003_cracker_box/textured.obj
+T 1 0 0 0 1 0 0 0 1 0 0 0
+mass 1
+com -0.0148312 -0.0141329 0.103031
+inertia 0.00693735 2.14328e-06 4.25956e-05 2.14328e-06 0.0049036 6.98521e-06 4.25956e-05 6.98521e-06 0.00312864
+kFriction 0.5
+kRestitution 0
+kStiffness inf
+kDamping inf

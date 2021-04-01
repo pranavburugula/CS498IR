@@ -1,0 +1,9 @@
+mesh ../../../data/objects/ycb-select/025_mug/textured.obj
+T 1 0 0 0 1 0 0 0 1 0 0 0
+mass 1
+com -0.0183057 0.0168699 0.0314553
+inertia 0.00112498 6.82753e-06 -2.46789e-05 6.82753e-06 0.00126921 -1.08198e-05 -2.46789e-05 -1.08198e-05 0.00134941
+kFriction 0.5
+kRestitution 0
+kStiffness inf
+kDamping inf

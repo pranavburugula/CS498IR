@@ -1,0 +1,9 @@
+mesh ../../../data/objects/ycb-select/024_bowl/textured.obj
+T 1 0 0 0 1 0 0 0 1 0 0 0
+mass 1
+com -0.0145063 -0.0447953 0.0255549
+inertia 0.00228375 1.83757e-05 -1.36417e-07 1.83757e-05 0.00226128 2.75932e-05 -1.36417e-07 2.75932e-05 0.00383533
+kFriction 0.5
+kRestitution 0
+kStiffness inf
+kDamping inf

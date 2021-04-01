@@ -1,0 +1,9 @@
+mesh ../../../data/objects/ycb-select/004_sugar_box/textured.obj
+T 1 0 0 0 1 0 0 0 1 0 0 0
+mass 1
+com -0.00774914 -0.0170099 0.0868516
+inertia 0.00367703 -2.33163e-05 0.000105679 -2.33163e-05 0.00307442 -3.86102e-05 0.000105679 -3.86102e-05 0.0010501
+kFriction 0.5
+kRestitution 0
+kStiffness inf
+kDamping inf

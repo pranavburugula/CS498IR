@@ -1,0 +1,9 @@
+mesh ../../../data/objects/ycb-select/028_skillet_lid/textured.obj
+T 1 0 0 0 1 0 0 0 1 0 0 0
+mass 1
+com 0.00650219 0.0265333 0.0179589
+inertia 0.0068097 0.000358755 2.50018e-05 0.000358755 0.00687191 1.16361e-05 2.50018e-05 1.16361e-05 0.0126574
+kFriction 0.5
+kRestitution 0
+kStiffness inf
+kDamping inf

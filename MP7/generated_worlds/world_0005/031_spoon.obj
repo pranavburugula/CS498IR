@@ -1,0 +1,9 @@
+mesh ../../../data/objects/ycb-select/031_spoon/textured.obj
+T 1 0 0 0 1 0 0 0 1 0 0 0
+mass 1
+com -0.0281481 -0.00655514 0.0104653
+inertia 0.000505438 0.00120238 9.48355e-05 0.00120238 0.00340645 -3.31486e-05 9.48355e-05 -3.31486e-05 0.00387173
+kFriction 0.5
+kRestitution 0
+kStiffness inf
+kDamping inf

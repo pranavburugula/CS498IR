@@ -1,0 +1,9 @@
+mesh ../../../data/objects/ycb-select/011_banana/textured.obj
+T 1 0 0 0 1 0 0 0 1 0 0 0
+mass 1
+com -0.00868247 0.00428997 0.0168689
+inertia 0.00245091 -0.000740409 2.58232e-05 -0.000740409 0.000588574 -4.77304e-06 2.58232e-05 -4.77304e-06 0.00282451
+kFriction 0.5
+kRestitution 0
+kStiffness inf
+kDamping inf

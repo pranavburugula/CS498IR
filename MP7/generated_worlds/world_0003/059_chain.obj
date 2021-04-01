@@ -1,0 +1,9 @@
+mesh ../../../data/objects/ycb-select/059_chain/textured.obj
+T 1 0 0 0 1 0 0 0 1 0 0 0
+mass 1
+com -0.0343951 0.0184431 0.00902212
+inertia 0.00634476 -0.000429178 -5.33354e-05 -0.000429178 0.00557438 -8.85461e-06 -5.33354e-05 -8.85461e-06 0.0118636
+kFriction 0.5
+kRestitution 0
+kStiffness inf
+kDamping inf

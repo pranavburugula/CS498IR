@@ -1,0 +1,9 @@
+mesh ../../../data/objects/ycb-select/035_power_drill/textured.obj
+T 1 0 0 0 1 0 0 0 1 0 0 0
+mass 1
+com -0.0311561 0.0224441 0.0235624
+inertia 0.00419503 0.000413246 3.5515e-05 0.000413246 0.0018565 7.89757e-05 3.5515e-05 7.89757e-05 0.00565579
+kFriction 0.5
+kRestitution 0
+kStiffness inf
+kDamping inf
