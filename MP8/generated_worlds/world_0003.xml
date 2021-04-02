@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<world>
+  <display background="0.400000 0.400000 1.000000 0.000000" />
+  <rigidObject name="004_sugar_box" file="generated_worlds/world_0003/004_sugar_box.obj" >
+    <display faceColor="1.000000 1.000000 1.000000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </rigidObject>
+  <rigidObject name="024_bowl" file="generated_worlds/world_0003/024_bowl.obj" >
+    <display faceColor="1.000000 1.000000 1.000000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </rigidObject>
+  <rigidObject name="037_scissors" file="generated_worlds/world_0003/037_scissors.obj" >
+    <display faceColor="1.000000 1.000000 1.000000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </rigidObject>
+  <rigidObject name="025_mug" file="generated_worlds/world_0003/025_mug.obj" >
+    <display faceColor="1.000000 1.000000 1.000000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </rigidObject>
+  <rigidObject name="009_gelatin_box" file="generated_worlds/world_0003/009_gelatin_box.obj" >
+    <display faceColor="1.000000 1.000000 1.000000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </rigidObject>
+  <terrain name="plane" file="generated_worlds/world_0003/plane.env" >
+    <display faceColor="0.800000 0.600000 0.200000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </terrain>
+  <terrain name="box_bottom" file="generated_worlds/world_0003/box_bottom.env" >
+    <display faceColor="0.300000 0.600000 0.200000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </terrain>
+  <terrain name="box_side_1" file="generated_worlds/world_0003/box_side_1.env" >
+    <display faceColor="0.300000 0.600000 0.200000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </terrain>
+  <terrain name="box_side_2" file="generated_worlds/world_0003/box_side_2.env" >
+    <display faceColor="0.300000 0.600000 0.200000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </terrain>
+  <terrain name="box_side_3" file="generated_worlds/world_0003/box_side_3.env" >
+    <display faceColor="0.300000 0.600000 0.200000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </terrain>
+  <terrain name="box_side_4" file="generated_worlds/world_0003/box_side_4.env" >
+    <display faceColor="0.300000 0.600000 0.200000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </terrain>
+</world>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<world>
+  <display background="0.400000 0.400000 1.000000 0.000000" />
+  <rigidObject name="029_plate" file="generated_worlds/world_0001/029_plate.obj" >
+    <display faceColor="1.000000 1.000000 1.000000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </rigidObject>
+  <rigidObject name="021_bleach_cleanser" file="generated_worlds/world_0001/021_bleach_cleanser.obj" >
+    <display faceColor="1.000000 1.000000 1.000000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </rigidObject>
+  <rigidObject name="048_hammer" file="generated_worlds/world_0001/048_hammer.obj" >
+    <display faceColor="1.000000 1.000000 1.000000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </rigidObject>
+  <rigidObject name="021_bleach_cleanser" file="generated_worlds/world_0001/021_bleach_cleanser_1.obj" >
+    <display faceColor="1.000000 1.000000 1.000000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </rigidObject>
+  <rigidObject name="003_cracker_box" file="generated_worlds/world_0001/003_cracker_box.obj" >
+    <display faceColor="1.000000 1.000000 1.000000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </rigidObject>
+  <terrain name="plane" file="generated_worlds/world_0001/plane.env" >
+    <display faceColor="0.800000 0.600000 0.200000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </terrain>
+  <terrain name="table_top" file="generated_worlds/world_0001/table_top.env" >
+    <display faceColor="0.400000 0.300000 0.200000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </terrain>
+  <terrain name="table_leg_1" file="generated_worlds/world_0001/table_leg_1.env" >
+    <display faceColor="0.400000 0.300000 0.200000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </terrain>
+  <terrain name="table_leg_2" file="generated_worlds/world_0001/table_leg_2.env" >
+    <display faceColor="0.400000 0.300000 0.200000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </terrain>
+  <terrain name="table_leg_3" file="generated_worlds/world_0001/table_leg_3.env" >
+    <display faceColor="0.400000 0.300000 0.200000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </terrain>
+  <terrain name="table_leg_4" file="generated_worlds/world_0001/table_leg_4.env" >
+    <display faceColor="0.400000 0.300000 0.200000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </terrain>
+</world>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<world>
+  <display background="0.400000 0.400000 1.000000 0.000000" />
+  <rigidObject name="025_mug" file="generated_worlds/world_0004/025_mug.obj" >
+    <display faceColor="1.000000 1.000000 1.000000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </rigidObject>
+  <rigidObject name="059_chain" file="generated_worlds/world_0004/059_chain.obj" >
+    <display faceColor="1.000000 1.000000 1.000000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </rigidObject>
+  <rigidObject name="029_plate" file="generated_worlds/world_0004/029_plate.obj" >
+    <display faceColor="1.000000 1.000000 1.000000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </rigidObject>
+  <terrain name="plane" file="generated_worlds/world_0004/plane.env" >
+    <display faceColor="0.800000 0.600000 0.200000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </terrain>
+  <terrain name="table_top" file="generated_worlds/world_0004/table_top.env" >
+    <display faceColor="0.400000 0.300000 0.200000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </terrain>
+  <terrain name="table_leg_1" file="generated_worlds/world_0004/table_leg_1.env" >
+    <display faceColor="0.400000 0.300000 0.200000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </terrain>
+  <terrain name="table_leg_2" file="generated_worlds/world_0004/table_leg_2.env" >
+    <display faceColor="0.400000 0.300000 0.200000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </terrain>
+  <terrain name="table_leg_3" file="generated_worlds/world_0004/table_leg_3.env" >
+    <display faceColor="0.400000 0.300000 0.200000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </terrain>
+  <terrain name="table_leg_4" file="generated_worlds/world_0004/table_leg_4.env" >
+    <display faceColor="0.400000 0.300000 0.200000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </terrain>
+</world>

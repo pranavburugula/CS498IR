@@ -20,7 +20,7 @@ from known_grippers import *
 from world_generator import ycb_objects,make_ycb_object,save_world
 from stable_faces import stable_faces,debug_stable_faces
 
-#PROBLEM = '1a'
+# PROBLEM = '1a'
 PROBLEM = '1b'
 
 base_files = ['table.xml','box.xml','shelf.xml']
@@ -102,7 +102,7 @@ def gen_grasp_worlds(N=10):
             base_boxes.append(resource.get(base_name+'.geom','GeometricPrimitive',default=box,world=world,doedit='auto'))
     output_file_pattern = "generated_worlds/world_%04d.xml"
     #TODO: play around with me, problem 1a
-    num_objects = [1,1,1,2,2,5]
+    num_objects = [3,3,4,5,6,6]
     for i in range(N):
         nobj = random.choice(num_objects)
         world = WorldModel()
@@ -250,6 +250,19 @@ def gen_grasp_images(max_variations=10):
             sensor_xform = world_camera_viewpoints[viewno]
 
             #TODO: problem 1.B: perturb camera and change colors
+            # Generate random axis, random angle, rotate about angle for orientation perturbation
+            # Generate random axis, random dist, translate distance over axis for position perturbation
+            rand_axis = np.random.rand(3)
+            rand_axis = vectorops.unit(rand_axis)
+            multiplier = np.random.choice([True, False], 1)
+            rand_angle = (np.random.rand(1)[0] * 10 + 10) * (-1 if multiplier else 1)
+            # print(rand_angle)
+            R = so3.from_axis_angle((rand_axis, np.radians(rand_angle)))
+            rand_axis = vectorops.unit(np.random.random(3))
+            rand_dist = np.random.random(1)[0] * .10 + .10
+            # print(rand_dist)
+            t = vectorops.mul(rand_axis, rand_dist)
+            sensor_xform = se3.mul((R,t), sensor_xform)
             sensing.set_sensor_xform(sensor,sensor_xform)
             
             rgb_filename = "image_dataset/color_%04d_var%04d.png"%(total_count,variation)
@@ -378,7 +391,25 @@ def make_grasp_map(world,id):
                 local_pt,world_pt = g.ik_constraint.getPosition()
                 local_axis,world_axis = g.ik_constraint.getRotationAxis()
                 #TODO: put your code here
-                found_approach = True
+                R = so3.vector_rotation(source_gripper.primary_axis, world_axis)
+                t = vectorops.sub(world_pt, source_gripper.center)
+                gripper_geom_open.setCurrentTransform(R,t)
+                non_collision = True
+                for i in range(world.numRigidObjects()):
+                    if i == gripper_robot.getID():
+                        continue
+                    if gripper_geom_open.collides(world.rigidObject(i).geometry()):
+                        non_collision = False
+                        break
+                found_approach = True if non_collision else False
+                if found_approach:
+                    gripper_geom.setCurrentTransform(R,t)
+                    for i in range(world.numRigidObjects()):
+                        if i == gripper_robot.getID() or i == obj.getID():
+                            continue
+                        if gripper_geom.collides(world.rigidObject(i).geometry()):
+                            found_approach = False
+                            break
                 grasps_feasible[(id,ycb_obj,gindex)] = found_approach
             if not found_approach:
                 continue

@@ -90,7 +90,8 @@ def sample_patch_dataset(dataset,N,patch_size=30):
         grasp_score = grasp_attrs['score']
         for i in range(retained_per_image):
             x,y = random.randint(patch_radius,color.shape[1]-1-patch_radius),random.randint(patch_radius,color.shape[0]-1-patch_radius)
-            samples.append((image_idx,x,y))
+            if abs(grasp_score[y,x]) >= 0.05:
+                samples.append((image_idx,x,y))
     return samples
 
 

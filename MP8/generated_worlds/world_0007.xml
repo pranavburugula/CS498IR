@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<world>
+  <display background="0.400000 0.400000 1.000000 0.000000" />
+  <rigidObject name="005_tomato_soup_can" file="generated_worlds/world_0007/005_tomato_soup_can.obj" >
+    <display faceColor="1.000000 1.000000 1.000000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </rigidObject>
+  <rigidObject name="048_hammer" file="generated_worlds/world_0007/048_hammer.obj" >
+    <display faceColor="1.000000 1.000000 1.000000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </rigidObject>
+  <rigidObject name="002_master_chef_can" file="generated_worlds/world_0007/002_master_chef_can.obj" >
+    <display faceColor="1.000000 1.000000 1.000000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </rigidObject>
+  <rigidObject name="037_scissors" file="generated_worlds/world_0007/037_scissors.obj" >
+    <display faceColor="1.000000 1.000000 1.000000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </rigidObject>
+  <terrain name="floor" file="generated_worlds/world_0007/floor.env" >
+    <display faceColor="0.800000 0.600000 0.200000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </terrain>
+  <terrain name="pod" file="generated_worlds/world_0007/pod.env" >
+    <display faceColor="0.300000 0.300000 0.300000 1.000000" silhouette="0.002500 0.000000 0.000000 0.000000 1.000000"/>
+  </terrain>
+</world>
